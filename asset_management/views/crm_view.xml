@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_crm_lead_form_inherit_main_tab" model="ir.ui.view">
+        <field name="name">crm.lead.form.inherit.main.tab</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_lead_view_form" />
+        <field name="arch" type="xml">
+           <!--  <xpath expr="//field[@name='street']" position="before">
+                <field name="address_title" placeholder="title" />
+            </xpath> -->
+            <xpath expr="//field[@name='lost_reason_id']" position="after">
+                <field name="po_loi_no" />
+                <field name="po_loi_date" />
+                <field name="safety_sensitivity" />
+            </xpath>
+            <xpath expr="//field[@name='tag_ids']" position="after">
+                <field name="business_unit_id" />
+                <field name="client_type_id" />
+            </xpath>
+            <xpath expr="//notebook" position="inside">
+                <page string="Contacts &amp; Addresses">
+                    <field name="related_contact_ids" widget="kanban">
+                        <kanban color="color">
+                            <field name="color"/>
+                            <field name="type"/>
+                            <field name="is_company"/>
+                            <templates>
+                                <t t-name="card" class="flex-row">
+                                    <aside class="o_kanban_aside_full">
+                                        <field name="avatar_128" class="o_kanban_image_fill w-100" widget="image" options="{'img_class': 'object-fit-cover'}" alt="Contact image"/>
+                                    </aside>
+                                    <main class="ps-2 ps-md-0">
+                                        <field name="name" class="fw-bold"/>
+                                        <field name="function"/>
+                                        <field name="email" widget="email"/>
+                                        <div t-if="record.type.raw_value != 'contact'">
+                                            <div>
+                                                <field class="me-1" name="zip"/>
+                                                <field name="city"/>
+                                            </div>
+                                            <field class="me-1" name="state_id"/>
+                                            <field name="country_id"/>
+                                        </div>
+                                        <div t-if="record.phone.raw_value">Phone: <field name="phone"/></div>
+                                        <div t-if="record.mobile.raw_value">Mobile: <field name="mobile"/></div>
+                                    </main>
+                                </t>
+                            </templates>
+                        </kanban>
+                        <form string="Contact / Address">
+                            <sheet>
+                                <field name="type" required="1" widget="radio" options="{'horizontal': true}"/>
+                                <div class="text-muted oe_edit_only">
+                                    <p class="mb-0" invisible="type != 'contact'">
+                                        <span>Use this to organize the contact details of employees of a given company (e.g. CEO, CFO, ...).</span>
+                                    </p>
+                                    <p class="mb-0" invisible="type != 'invoice'">
+                                        <span>Preferred address for all invoices. Selected by default when you invoice an order that belongs to this company.</span>
+                                    </p>
+                                    <p class="mb-0" invisible="type != 'delivery'">
+                                        <span>Preferred address for all deliveries. Selected by default when you deliver an order that belongs to this company.</span>
+                                    </p>
+                                    <p class="mb-0" invisible="type != 'other'">
+                                        <span>Other address for the company (e.g. subsidiary, ...)</span>
+                                    </p>
+                                </div>
+                                <hr/>
+                                <group>
+                                    <group>
+                                        <field name="name" string="Contact Name" required="type == 'contact'"
+                                             placeholder="e.g. New Address"/>
+                                        <field name="title" options="{'no_open': True}" placeholder="e.g. Mr."
+                                            invisible="type != 'contact'"/>
+                                        <field name="function" placeholder="e.g. Sales Director"
+                                            invisible="type != 'contact'"/>
+                                        <label for="street" string="Address" invisible="type == 'contact'"/>
+                                        <div invisible="type == 'contact'">
+                                            <div class="o_address_format" name="div_address">
+                                                <field name="street" placeholder="Street..." class="o_address_street"/>
+                                                <field name="street2" placeholder="Street 2..." class="o_address_street"/>
+                                                <field name="city" placeholder="City" class="o_address_city"/>
+                                                <field name="state_id" class="o_address_state" placeholder="State" options="{'no_open': True, 'no_quick_create': True}" context="{'country_id': country_id, 'default_country_id': country_id, 'zip': zip}"/>
+                                                <field name="zip" placeholder="ZIP" class="o_address_zip"/>
+                                                <field name="country_id" placeholder="Country" class="o_address_country" options='{"no_open": True, "no_create": True}'/>
+                                            </div>
+                                        </div>
+                                    </group>
+                                    <group>
+                                        <field name="email" widget="email"/>
+                                        <field name="phone" widget="phone"/>
+                                        <field name="mobile" widget="phone"/>
+                                        <field name="company_id" invisible="1"/>    <!-- Need to save value from parented record, cf onchange -->
+                                    </group>
+                                </group>
+                                <group>
+                                    <field name="comment" placeholder="Internal notes..." nolabel="1"/>
+                                </group>
+                                <field name="lang" invisible="True"/>  <!-- Need to add lang to save default value from parented record -->
+                            </sheet>
+                        </form>
+                    </field>
+                </page>
+                <page name="sales_purchases" string="Sales &amp; Purchase">
+                    <group name="container_row_2">
+                        <group string="Sales" name="sale" priority="1">
+                            <field name="user_id" widget="many2one_avatar_user" domain="[('share', '=', False)]"/>
+                            <field name="sale_payment_term_id"/>
+                            <field name="sale_payment_method"/>
+                        </group>
+                        <group string="Purchase" name="purchase" priority="2">
+                            <field name="buyer_id"/>
+                            <field name="purchase_payment_term_id"/>
+                            <field name="purchase_payment_method"/>
+                            <field name="receipt_reminder"/>
+                        </group>
+                    </group>
+                </page>
+                <page string="Asset Requirement">
+                    <field name="asset_requirement_ids">
+                        <list editable="bottom">
+                            <field name="sr_no" />
+                            <field name="rating" />
+                            <field name="no_of_phase" />
+                            <field name="voltage" />
+                            <field name="qty" />
+                            <field name="recurring" />
+                            <field name="rental_start_date" />
+                            <field name="rental_end_date" />
+                            <field name="description" />
+                        </list>
+                    </field>
+                </page>
+                <page string="Scope Of Work">
+                    <field name="asset_scope_of_work_ids">
+                        <list editable="bottom">                           
+                            <field name="sr_no"/>
+                            <field name="product_id"/>
+                            <field name="scope"/>
+                            <field name="description"/>
+                            <field name="qty"/>
+                            <field name="unit_price"/>
+                            <field name="uom_id"/>
+                            <field name="special_requirement"/>
+                        </list>
+                    </field>
+                </page>
+                 
+                <page string="Documents">
+                    <field name="document_line_ids">
+                        <list editable="bottom">
+                            <field name="sr_no"/>
+                            <field name="document_type"/>
+                        </list>
+                    </field>
+                </page>
+
+                <page string="Logistics">
+                    <field name="logistics_line_ids">
+                        <list string="Logistics">
+                            <field name="delivery_date"/>
+                            <field name="loading_address"/>
+                            <field name="unloading_address"/>
+                            <field name="vehicle_id"/>
+                            <field name="description"/>
+                        </list>
+                        <form string="Logistics">
+                            <group>
+                                <group>
+                                <field name="delivery_date"/>
+                                <field name="loading_address"/>
+                                <field name="unloading_address"/>
+                                <field name="vehicle_id"/>
+                                <field name="description"/>
+                                </group>
+                            </group>
+                        </form>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

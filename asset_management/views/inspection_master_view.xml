@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- List View -->
+    <record id="view_list_inspection_master" model="ir.ui.view">
+        <field name="name">inspection.master.list</field>
+        <field name="model">inspection.master</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="asset_type_id"/>
+                <field name="frequency"/>
+                <field name="usage_meter_reading"/>
+                <field name="usage_uom"/>
+                <field name="checklist_required"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_form_inspection_master" model="ir.ui.view">
+        <field name="name">inspection.master.form</field>
+        <field name="model">inspection.master</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="asset_type_id"/>
+                        <field name="frequency"/>
+                        <field name="usage_meter_reading"/>
+                        <field name="usage_uom"/>
+                        <field name="checklist_required"/>
+                    </group>
+
+                    <notebook>
+                        <page string="Inspection Checklist">
+                            <field name="checklist_line_ids">
+                                <list editable="bottom">
+                                    <field name="section"/>
+                                    <field name="task_list"/>
+                                    <field name="expected_value"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <!-- Action -->
+    <record id="action_inspection_master" model="ir.actions.act_window">
+        <field name="name">Inspection Master</field>
+        <field name="res_model">inspection.master</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p>Define inspection and associated checklists.</p>
+        </field>
+    </record>
+</odoo>

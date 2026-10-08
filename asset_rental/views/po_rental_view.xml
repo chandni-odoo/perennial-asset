@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_purchase_rental_order_list" model="ir.ui.view">
+        <field name="name">purchase.rental.order.list</field>
+        <field name="model">purchase.rental.order</field>
+        <field name="arch" type="xml">
+            <list string="Rental Order">
+                <field name="partner_id" />
+                <field name="order_date" />
+                <field name="state" />
+            </list>
+        </field>
+    </record>
+    <record id="view_purchase_rental_order_form" model="ir.ui.view">
+        <field name="name">purchase.rental.order.form</field>
+        <field name="model">purchase.rental.order</field>
+        <field name="arch" type="xml">
+            <form string="Rental Order">
+                <header>
+                    <button name="action_confirm" string="Confirm Rental" type="object" invisible="state != 'draft'"/>
+                    <button name="action_close" string="Close Rental" type="object"  invisible="state != 'confirm'"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,confirm,close" />
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_purchase_orders" type="object" string="Purchase Orders" class="oe_stat_button" icon="fa-shopping-cart">
+                            <field name="purchase_order_ids" widget="statinfo" string="Purchase Orders" />
+                        </button>
+                        <button name="action_view_pickings" type="object" string="Receipts" class="oe_stat_button" icon="fa-pencil-square-o" invisible="total_pickings == 0">
+                            <field name="total_pickings" widget="statinfo" />
+                        </button>
+                        <button name="action_open_vendor_bills" type="object" string="Vendor Bills" class="oe_stat_button" icon="fa-file-invoice-dollar" invisible="vendor_bill_ids == False">
+                            <field name="vendor_bill_count" widget="statinfo" string="Vendor Bills" />
+                        </button>
+                    </div>
+                    <h1>Rental Agreement
+                        <field name="name" readonly="1" />
+                    </h1>
+                    <group>
+                        <group>
+                            <field name="partner_id" widget="res_partner_many2one" context="{'res_partner_search_mode': 'customer', 'show_address': 1, 'show_vat': True}" options='{"always_reload": True}' />
+                            <field name="partner_invoice_id" groups="account.group_delivery_invoice_address" options="{'no_quick_create': True}" context="{'default_type':'delivery', 'show_address': False, 'show_vat': False, 'default_parent_id': partner_id}" />
+                            <field name="partner_shipping_id" groups="account.group_delivery_invoice_address" options="{'no_quick_create': True}" context="{'default_type':'delivery', 'show_address': False, 'show_vat': False, 'default_parent_id': partner_id}" />
+                        </group>
+                        <group>
+                            <field name="order_date" />
+                            <field name="close_date" readonly="1" />
+                            <field name="reference" />
+                            <field name="purchase_order_id" />
+                        </group>
+                    </group>
+                    <notebook>
+                        <!-- Equipment Rental -->
+                        <page string="Equipment Rental">
+                            <field name="rental_line_ids" nolabel="1" readonly="state == 'confirm'">
+                                <list>
+                                    <field name="product_category_id" readonly="1" />
+                                    <field name="product_id" domain="[('rerent_ok','=',True)]" />
+                                    <field name="description" />
+                                    <field name="rental_intervals" />
+                                    <field name="date_start" />
+                                    <field name="date_end" />
+                                    <field name="duration_cycle" />
+                                    <field name="recurring_next_date" />
+                                    <field name="product_qty" />
+                                    <field name="price_unit" string="Rent" />
+                                    <field name="tax_ids" />
+                                    <field name="price_subtotal" />
+                                </list>
+                                <form string="Asset Rental Line">
+                                    <group>
+                                        <group>
+                                            <field name="product_id" />
+                                            <field name="product_qty" />
+                                            <field name="price_unit" string="Rent" />
+                                            <field name="tax_ids" />
+                                        </group>
+                                        <group>
+                                            <field name="rerent_ok" invisible="1" />
+                                            <field name="rental_intervals" required="rerent_ok == True" />
+                                            <field name="duration_cycle" />
+                                            <field name="duration_cycle_count"/>
+                                            <field name="date_start" />
+                                            <field name="date_end"/>
+                                            <field name="recurring_next_date" />
+                                        </group>
+                                    </group>
+                                    <group>
+                                        <field name="description" />
+                                    </group>
+                                </form>
+                            </field>
+                            <group class="oe_subtotal_footer">
+                                <field name="amount_untaxed" readonly="1" />
+                                <field name="amount_tax" readonly="1" />
+                                <field name="amount_total" readonly="1" />
+                            </group>
+                        </page>
+                        <!-- Rental History -->
+                        <page string="Rental History">
+                            <field name="history_ids" readonly="1">
+                                <list string="Rental History" editable="bottom">
+                                    <field name="product_id" />
+                                    <field name="interval_name" />
+                                    <field name="start_date" />
+                                    <field name="end_date" />
+                                    <field name="amount" />
+                                    <field name="currency_id" />
+                                    <field name="invoice_id" />
+                                    <field name="date" />
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="view_purchase_rental_order_search" model="ir.ui.view">
+        <field name="name">purchase.rental.order.search</field>
+        <field name="model">purchase.rental.order</field>
+        <field name="arch" type="xml">
+            <search string="Rental Orders">
+                <field name="name" />
+                <field name="partner_id" />
+                <field name="state" />
+                <filter string="Draft" name="filter_draft" domain="[('state','=','draft')]" />
+                <filter string="Confirmed" name="filter_confirmed" domain="[('state','=','confirm')]" />
+                <filter string="Closed" name="filter_closed" domain="[('state','=','close')]" />
+                <group expand="1" string="Group By">
+                    <filter string="Partner" name="group_by_partner" context="{'group_by': 'partner_id'}" />
+                    <filter string="State" name="group_by_state" context="{'group_by': 'state'}" />
+                </group>
+            </search>
+        </field>
+    </record>
+    <record id="view_purchase_rental_order_kanban" model="ir.ui.view">
+        <field name="name">purchase.rental.order.kanban</field>
+        <field name="model">purchase.rental.order</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_small_column">
+                <field name="name" />
+                <field name="partner_id" />
+                <field name="state" />
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            <div class="o_kanban_record_title">
+                                <strong>
+                                    <field name="name" /></strong>
+                            </div>
+                            <div>
+                                <span>
+                                    <field name="partner_id" /></span>
+                            </div>
+                            <div>
+                                <span>Status:
+                                    <field name="state" /></span>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+    <record id="action_purchase_rental_order" model="ir.actions.act_window">
+        <field name="name">Rental Order</field>
+        <field name="res_model">purchase.rental.order</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="search_view_id" ref="view_purchase_rental_order_search" />
+    </record>
+</odoo>

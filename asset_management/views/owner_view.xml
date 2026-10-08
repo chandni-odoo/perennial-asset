@@ -1,0 +1,34 @@
+<odoo>
+
+    <!-- Tree and Form for Asset Owner -->
+    <record id="view_asset_owner_tree" model="ir.ui.view">
+        <field name="name">asset.owner.tree</field>
+        <field name="model">asset.owner</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_asset_owner_form" model="ir.ui.view">
+        <field name="name">asset.owner.form</field>
+        <field name="model">asset.owner</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_asset_owner" model="ir.actions.act_window">
+        <field name="name">Asset Owner</field>
+        <field name="res_model">asset.owner</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+</odoo>

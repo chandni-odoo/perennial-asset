@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- List View -->
+    <record id="view_asset_list" model="ir.ui.view">
+        <field name="name">asset.asset.list</field>
+        <field name="model">asset.asset</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name" />
+                <field name="asset_code" />
+                <field name="type_id"/>
+                <field name="category_id" />
+                <field name="make_id" />
+                <field name="serial_number" />
+                <field name="purchase_type" />
+            </list>
+        </field>
+    </record>
+    <!-- Form View -->
+    <record id="view_asset_form" model="ir.ui.view">
+        <field name="name">asset.asset.form</field>
+        <field name="model">asset.asset</field>
+        <field name="arch" type="xml">
+            <form string="Asset">
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name" class="oe_edit_only" />
+                        <h1>
+                            <field name="name" />
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="asset_code" readonly="1"/>
+                            <field name="type_id"/>
+                            <field name="type_name" invisible="1"/>
+                            <field name="make_id"/>
+                            <field name="purchase_type"/>
+                            <field name="serial_number"/>
+                            <field name="unit"/>
+                            <field name="category_id"/>
+                            <field name="variant"/>
+                        </group>
+                        <group>
+                            <field name="owner_id"/>
+                            <field name="hz_id" invisible="type_name in ['Compressor']"/>
+                            <field name="rating" />
+                            <field name="voltage"/>
+                            <field name="no_of_phase" invisible="type_name in ['Compressor']"/>
+                            <field name="manufacturing_date" string="Mfg. Date"/>
+                            <field name="model_name" />
+                            <field name="asset_asn" />
+                            <field name="old_asset_code"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="special_feature"/>
+                    </group>
+
+                    <notebook>
+                        <!-- Purchase Tab -->
+                        <page string="Purchase">
+                            <group>
+                                <field name="purchase_id" />
+                                <field name="purchase_date" />
+                                <field name="ownership_transfer" />
+                                <field name="warranty_expiry_date"/>
+                            </group>
+                        </page>
+                        <!-- Rerental Tab -->
+                        <page string="Rerental">
+                            <group>
+                                <field name="rerental_vendor_id" />
+                                <field name="rerental_order_no" />
+                                <field name="maintenance_scope" />
+                            </group>
+                        </page>
+                        <!-- IOT Devices Tab -->
+                        <page string="IOT Devices">
+                            <field name="iot_ids">
+                                <list editable="bottom">
+                                    <field name="name" />
+                                    <field name="qr_code" />
+                                </list>
+                            </field>
+                        </page>
+                        <!-- Asset Documents Tab -->
+                        <page string="Documents">
+                            <field name="document_ids">
+                                <list editable="bottom">
+                                    <field name="name" />
+                                    <field name="document_date" />
+                                    <field name="expiry_date" />
+                                    <field name="certificate_attachment" filename="attachment_filename" />
+                                </list>
+                            </field>
+                        </page>
+                        <!-- Controller Tab -->
+                        <page string="Controller Details">
+                            <field name="controller_ids">
+                                <list editable="bottom">
+                                    <field name="controller_id" />
+                                    <field name="manufacturing_year"/>
+                                    <field name="current_hr_reading"/>
+                                    <field name="status"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Master Inspection Schedule">
+                            <field name="inspection_schedule_ids">
+                                <list editable="bottom">
+                                    <field name="name"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Master Maintanance Schedule">
+                            <field name="maintenance_ids">
+                                <list editable="bottom">
+                                    <field name="name"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <!-- Action -->
+    <record id="action_asset" model="ir.actions.act_window">
+        <field name="name">Assets</field>
+        <field name="res_model">asset.asset</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

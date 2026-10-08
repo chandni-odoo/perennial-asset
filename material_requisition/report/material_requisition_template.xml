@@ -1,0 +1,122 @@
+<odoo>
+    <template id="report_material_requisition_document">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <div class="page">
+                    <!-- Title -->
+                    <h2 style="text-align:center; color:#004080;">Purchase Requisition</h2>
+
+                    <!-- Basic Info Table -->
+                    <table class="table table-sm" border="1" cellpadding="5" style="width: 100%; border-collapse: collapse;">
+                        <tbody>
+                            <tr>
+                                <td><strong>Request Raised By:</strong></td>
+                                <td><t t-esc="doc.request_raised_by_id.name"/></td>
+                                <td><strong>Request Raised For:</strong></td>
+                                <td><t t-esc="doc.request_raised_for_id.name"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Department:</strong></td>
+                                <td><t t-esc="doc.department_id_by.name"/></td>
+                                <td><strong>Department:</strong></td>
+                                <td><t t-esc="doc.department_id_for.name"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Job Position:</strong></td>
+                                <td><t t-esc="doc.job_id_by.name"/></td>
+                                <td><strong>Job Position:</strong></td>
+                                <td><t t-esc="doc.job_id_for.name"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Reporting Manager:</strong></td>
+                                <td><t t-esc="doc.reporting_manager_id.name"/></td>
+                                <td><strong>Reporting Manager:</strong></td>
+                                <td><t t-esc="doc.reporting_manager_id.name"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Purpose:</strong></td>
+                                <td><t t-esc="doc.purpose"/></td>
+                                <td><strong>Indent Date:</strong></td>
+                                <td><t t-esc="doc.indent_date"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Destination Location:</strong></td>
+                                <td><t t-esc="doc.destination_location_id.name"/></td>
+                                <td><strong>Required Date:</strong></td>
+                                <td><t t-esc="doc.required_date"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Requirement:</strong></td>
+                                <td colspan="3">
+                                    <t t-if="doc.requirement == 'normal'">Ordinary</t>
+                                    <t t-if="doc.requirement == 'urgent'">Urgent</t>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <br/>
+                    <h3>Approved Product's</h3>
+                    <!-- Approved Products Table -->
+                    <table class="table table-sm" border="1" cellpadding="5" style="width: 100%; border-collapse: collapse;">
+                        <thead style="background-color: #f0f0f0;">
+                            <tr>
+                                <th style="text-align: center;">SL.NO.</th>
+                                <th style="text-align: center;">PRODUCT</th>
+                                <th style="text-align: center;">ONHAND QUANTITY</th>
+                                <th style="text-align: center;">QUANTITY</th>
+                                <th style="text-align: center;">QUANTITY SHIPPED</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="doc.line_ids" t-as="line" t-foreach-index="idx">
+                                <tr>
+                                    <td style="text-align: center;"><t t-esc="idx"/></td>
+                                    <td><t t-esc="line.product_id.name if line.product_id else ''"/></td>
+                                    <td style="text-align: right;"><t t-esc="line.on_hand_qty or 0.0"/></td>
+                                    <td style="text-align: right;"><t t-esc="line.product_qty or 0.0"/></td>
+                                    <td style="text-align: right;"><t t-esc="line.product_qty or 0.0"/></td> <!-- Assuming shipped = qty -->
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+
+                    <br/>
+
+                    <!-- Approval Info -->
+                    <p><strong>Approval Type:</strong> <t t-esc="doc.approval_type.name"/></p>
+                    <p><strong>Approver</strong></p>
+                    <table class="table table-sm" border="1" cellpadding="5" style="width: 100%; border-collapse: collapse;">
+                        <thead style="background-color: #f0f0f0;">
+                        <tr>
+                            <th style="text-align: center;">Approver</th>
+                            <th style="text-align: center;">Status</th>
+                            <th style="text-align: center;">Date</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr t-foreach="doc.requisition_history_ids" t-as="line">
+                            <td style="text-align: center;"><span t-field="line.user_id"/></td>
+                            <td style="text-align: center;"><span t-field="line.status"/></td>
+                            <td style="text-align: center;"><span t-field="line.date_done"/></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <br/><br/><br/>
+
+                    <!-- Signatures -->
+                    <table style="width: 100%; margin-top: 40px;">
+                        <tr>
+                            <td style="width: 50%; text-align: center;">
+                                <strong>Prepared By</strong>
+                            </td>
+                            <td style="width: 50%; text-align: center;">
+                                <strong>Signature</strong>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

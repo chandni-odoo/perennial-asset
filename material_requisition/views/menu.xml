@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_mr_custom_root" name="Material Requisition" web_icon="material_requisition/static/description/icon.png" />
+    <menuitem id="menu_material_requisition" name="Material Requisition" parent="menu_mr_custom_root" action="action_material_requisition" sequence="40" />
+    <menuitem id="menu_material_request_approver" name="Material Request Approvers" parent="menu_mr_custom_root" action="action_material_request_approver" sequence="50" />
+</odoo>

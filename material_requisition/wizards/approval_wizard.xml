@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_approval_remark_wizard_form" model="ir.ui.view">
+        <field name="name">approval.remark.wizard.form</field>
+        <field name="model">approval.remark.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Material Requisition Approval Remarks">
+                <group>
+                    <field name="enable_default_remark"/>
+                    <field name="approval_remark"/>
+                </group>
+                <footer>
+                    <button name="submit_remark" string="Submit" type="object" class="btn-primary"/>
+                    <button string="Cancel" special="cancel" class="btn-secondary"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="action_approval_remark_wizard" model="ir.actions.act_window">
+        <field name="name">Approval Remark</field>
+        <field name="res_model">approval.remark.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

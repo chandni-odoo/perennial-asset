@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_create_rfq_wizard" model="ir.ui.view">
+    <field name="name">create.rfq.wizard.form</field>
+    <field name="model">create.rfq.wizard</field>
+    <field name="arch" type="xml">
+        <form string="Create RFQ">
+            <group>
+                <field name="requisition_id" readonly="1"/>
+                <field name="supplier_id"/>
+            </group>
+            <field name="line_ids">
+                <list editable="bottom">
+                    <field name="product_id"/>
+                    <field name="product_uom_qty"/>
+                    <field name="product_uom"/>
+                </list>
+            </field>
+            <footer>
+                <button string="Create RFQ" type="object" name="action_create_rfq" class="btn-primary"/>
+                <button string="Cancel" class="btn-secondary" special="cancel"/>
+            </footer>
+        </form>
+    </field>
+    </record>
+    <record id="action_create_rfq_wizard" model="ir.actions.act_window">
+        <field name="name">Create RFQ</field>
+        <field name="res_model">create.rfq.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="context">{'default_requisition_id': active_id}</field>
+    </record>
+</odoo>

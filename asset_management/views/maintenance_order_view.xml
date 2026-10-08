@@ -1,0 +1,110 @@
+<odoo>
+
+    <!-- list View -->
+    <record id="view_list_maintenance_request" model="ir.ui.view">
+        <field name="name">maintenance.request.list</field>
+        <field name="model">maintenance.request</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="asset_id"/>
+                <field name="stage"/>
+                <field name="assigned_to"/>
+                <field name="inward_date"/>
+                <field name="estimated_delivery_date"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_form_maintenance_request" model="ir.ui.view">
+        <field name="name">maintenance.request.form</field>
+        <field name="model">maintenance.request</field>
+        <field name="arch" type="xml">
+            <form string="Maintenance Request Order">
+                <header>
+                    <field name="stage" widget="statusbar" statusbar_visible="new,in_progress,done,cancel"/>
+                    <button name="action_material_requisition" type="object" string="Material Requisition" class="oe_highlight"/>
+                    <button name="action_create_sales_order" type="object" string="Sales Order"/>
+                    <button name="action_create_invoice" type="object" string="Invoice"/>
+                </header>
+
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="asset_id"/>
+                        <field name="serial_number" readonly="1"/>
+                        <field name="location"/>
+                        <field name="assigned_to"/>
+                        <field name="inward_date"/>
+                        <field name="estimated_delivery_date"/>
+                        <field name="maintenance_master_id"/>
+                        <field name="actual_delivery_date"/>
+                        <field name="er_no"/>
+                        <field name="customer_name"/>
+                    </group>
+
+                    <notebook>
+                        <page string="Pre Inspection">
+                            <field name="pre_inspection_ids">
+                                <list editable="bottom">
+                                    <field name="section"/>
+                                    <field name="item"/>
+                                    <field name="issue"/>
+                                    <field name="remarks"/>
+                                </list>
+                            </field>
+                        </page>
+
+                        <page string="Job Card">
+                            <field name="job_card_ids">
+                                <list editable="bottom">
+                                    <field name="section"/>
+                                    <field name="type"/>
+                                    <field name="product_id"/>
+                                    <field name="activity"/>
+                                    <field name="quantity"/>
+                                    <field name="uom_id"/>
+                                    <field name="cost"/>
+                                    <field name="unit_price"/>
+                                    <field name="tax_ids" widget="many2many_tags"/>
+                                    <field name="subtotal" readonly="1"/>
+                                    <field name="remarks"/>
+                                    <field name="technician_id"/>
+                                </list>
+                            </field>
+                        </page>
+
+                        <page string="Final Inspection">
+                            <field name="final_inspection_ids">
+                                <list editable="bottom">
+                                    <field name="section"/>
+                                    <field name="item"/>
+                                    <field name="issue"/>
+                                    <field name="remarks"/>
+                                </list>
+                            </field>
+                        </page>
+
+                        <!-- <page string="Timesheet">
+                            <field name="timesheet_ids" >
+                                <list string="Timesheet Activities" default_order="date" no_open="1" create="false" delete="0">
+                                    <field name="date"/>
+                                    <field name="employee_id"/>
+                                    <field name="name"/>
+                                    <field name="unit_amount" string="Time Spent" widget="timesheet_uom" decoration-danger="unit_amount &gt; 24"/>
+                                </list>
+                            </field>
+                        </page> -->
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <!-- Action -->
+    <record id="action_maintenance_request" model="ir.actions.act_window">
+        <field name="name">Maintenance Request</field>
+        <field name="res_model">maintenance.request</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

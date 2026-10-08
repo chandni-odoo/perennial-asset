@@ -1,0 +1,34 @@
+<odoo>
+    <data noupdate="1">
+        <record id="asset_category_genset" model="asset.category">
+            <field name="name">Genset</field>
+        </record>
+        <record id="asset_category_lighting_tower" model="asset.category">
+            <field name="name">Lighting Tower</field>
+        </record>
+        <record id="asset_category_panels" model="asset.category">
+            <field name="name">Panels</field>
+        </record>
+        <record id="asset_category_transformer" model="asset.category">
+            <field name="name">Transformer</field>
+        </record>
+        <record id="asset_category_ups" model="asset.category">
+            <field name="name">UPS</field>
+        </record>
+        <record id="asset_category_load_bank" model="asset.category">
+            <field name="name">Load Bank</field>
+        </record>
+        <record id="asset_category_compressor" model="asset.category">
+            <field name="name">Compressor</field>
+        </record>
+        <record id="asset_category_pump" model="asset.category">
+            <field name="name">Pump</field>
+        </record>
+        <record id="asset_category_dg_trolley" model="asset.category">
+            <field name="name">DG Trolley</field>
+        </record>
+        <record id="asset_category_mlt_trolley" model="asset.category">
+            <field name="name">MLT Trolley</field>
+        </record>
+    </data>
+</odoo>

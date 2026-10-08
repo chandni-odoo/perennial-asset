@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_asset_master_form" model="ir.ui.view">
+        <field name="name">asset.master.form</field>
+        <field name="model">asset.master</field>
+        <field name="arch" type="xml">
+            <form string="Asset Master">
+                <sheet>
+                    <group>
+                        <group string="General Info">
+                            <field name="name"/>
+                            <field name="category_id"/>
+                            <field name="type_id"/>
+                            <field name="make_id" invisible="type_name in ['Lighting Tower', 'Compressor', 'Pump', 'DG Trolley']"/>
+                            <field name="owner_id"/>
+                            <field name="measurement_unit_id"/>
+                            <field name="type_name" invisible="1"/>
+                        </group>
+                        <group string="Specifications">
+                            <field name="rating" invisible="type_name in ['Lighting Tower', 'Panels', 'Transformer', 'UPS', 'Compressor', 'Pump', 'DG Trolley']"/>
+                            <field name="no_of_phase" invisible="type_name in ['Compressor']"/>
+                            <field name="voltage"/>
+                            <field name="hz_id" invisible="type_name in ['Compressor']"/>
+                            <field name="tag_ids" widget="many2many_tags"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <!-- Asset Material Tab -->
+                        <page string="Asset Material">
+                            <field name="material_line_ids">
+                                <list editable="bottom">
+                                    <field name="product_id"/>
+                                    <field name="description"/>
+                                    <field name="uom_id"/>
+                                    <field name="quantity"/>
+                                </list>
+                            </field>
+                        </page>
+
+                        <!-- Inspection Master Tab -->
+                        <page string="Inspection Master">
+                            <field name="inspection_line_ids">
+                                <list editable="bottom">
+                                    <field name="inspection_id"/>
+                                    <field name="frequency"/>
+                                </list>
+                            </field>
+                        </page>
+
+                        <!-- Maintenance Master Tab -->
+                        <page string="Maintenance Master">
+                            <field name="maintenance_line_ids">
+                                <list editable="bottom">
+                                    <field name="maintenance_id"/>
+                                    <field name="hourly_reading"/>
+                                    <field name="frequency"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_asset_master_list" model="ir.ui.view">
+        <field name="name">asset.master.list</field>
+        <field name="model">asset.master</field>
+        <field name="arch" type="xml">
+            <list string="Asset Master">
+                <field name="name"/>
+                <field name="category_id"/>
+                <field name="make_id"/>
+                <field name="type_id"/>
+                <field name="no_of_phase"/>
+                <field name="measurement_unit_id"/>
+                <field name="rating"/>
+                <field name="voltage"/>
+                <field name="hz_id"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_asset_master" model="ir.actions.act_window">
+        <field name="name">Asset Masters</field>
+        <field name="res_model">asset.master</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+</odoo>

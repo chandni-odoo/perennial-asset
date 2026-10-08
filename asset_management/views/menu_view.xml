@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Root Menu -->
+    <menuitem id="asset_menu_root" name="Assets" sequence="55" />
+    <!-- Assets -->
+    <menuitem id="asset_menuitem" name="Assets" action="action_asset" parent="asset_menu_root" sequence="10" />
+    <menuitem id="menu_maintenance_request" name="Maintenance Orders" parent="asset_menu_root" action="action_maintenance_request" sequence="20" />
+    <menuitem id="menu_inspection_order" name="Inspection Orders" parent="asset_menu_root" action="action_inspection_order" sequence="30" />
+    <!-- Configuration -->
+    <menuitem id="asset_menu_root_config" name="Configuration" parent="asset_menu_root" sequence="100" />
+    <!-- Config Master -->
+    <menuitem id="master_menuitem" name="Masters" parent="asset_menu_root_config" sequence="90" />
+    <menuitem id="asset_master_menuitem" name="Asset Masters" parent="master_menuitem" action="action_asset_master" sequence="20" />
+    <menuitem id="menu_inspection_master" name="Inspection Master" parent="master_menuitem" action="action_inspection_master" sequence="30" />
+    <menuitem id="menu_maintenance_master" name="Maintenance Master" parent="master_menuitem" action="action_maintenance_master" sequence="40" />
+    <!-- Config Assets -->
+    <menuitem id="asset_config_menuitem" name="Assets" parent="asset_menu_root_config" sequence="100" />
+    <menuitem id="asset_make_menuitem" name="Make" action="action_asset_make" parent="asset_config_menuitem" sequence="1" />
+    <menuitem id="menu_phase_master" name="Phase Master" parent="asset_config_menuitem" action="action_phase_master" sequence="50" />
+    <menuitem id="menu_rating_master" name="Rating Master" parent="asset_config_menuitem" action="action_rating_master" sequence="51" />
+    <menuitem id="menu_voltage_master" name="Voltage Master" parent="asset_config_menuitem" action="action_voltage_master" sequence="52" />
+    <menuitem id="menu_asset_tags" name="Asset Tags" action="asset_tags_action" parent="asset_config_menuitem" sequence="53" />
+    <menuitem id="menu_asset_hz" name="HZ" parent="asset_config_menuitem" action="action_asset_hz" sequence="54" />
+    <menuitem id="menu_asset_owner" name="Asset Owner" parent="asset_config_menuitem" action="action_asset_owner" sequence="55" />
+    <menuitem id="menu_asset_controller" name="Controller Type" parent="asset_config_menuitem" action="action_asset_controller" sequence="56" />
+    <menuitem id="menu_asset_category" name="Asset Category" parent="asset_config_menuitem" action="action_asset_category" sequence="57" />
+    <!-- CRM -->
+    <menuitem id="menu_crm_asset_config" name="Assets" parent="crm.crm_menu_config" sequence="20" />
+    <menuitem id="menu_business_unit" name="Business Unit" parent="menu_crm_asset_config" action="action_business_unit" sequence="10" />
+    <menuitem id="menu_client_type" name="Type of Client" parent="menu_crm_asset_config" action="action_client_type" sequence="20" />
+</odoo>

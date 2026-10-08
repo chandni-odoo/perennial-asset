@@ -1,0 +1,69 @@
+<odoo>
+    <!-- Form View -->
+    <record id="view_inspection_order_form" model="ir.ui.view">
+        <field name="name">inspection.order.form</field>
+        <field name="model">inspection.order</field>
+        <field name="arch" type="xml">
+            <form string="Inspection Order">
+                <header>
+                    <button name="action_create_maintenance_order"
+                            string="Create Maintenance Order"
+                            type="object"
+                            class="btn-primary"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="customer_name"/>
+                            <field name="asset_id"/>
+                            <field name="product_id"/>
+                            <field name="serial_number"/>
+                            <field name="location"/> 
+                        </group>
+                        <group>
+                            <field name="inspected_date"/>
+                            <field name="scheduled_date"/>
+                            <field name="assign_to"/>
+                            <field name="inspection_master_id"/>
+                        </group>
+                    </group>
+                    <notebook>
+                         <page string="Inspection">
+                            <field name="inspection_line_ids">
+                                <list editable="bottom">
+                                    <field name="section"/>
+                                    <field name="item"/>
+                                    <field name="activity"/>
+                                    <field name="remarks"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Tree View -->
+    <record id="view_inspection_order_list" model="ir.ui.view">
+        <field name="name">inspection.order.list</field>
+        <field name="model">inspection.order</field>
+        <field name="arch" type="xml">
+            <list string="Inspection Orders">
+                <field name="customer_name"/>
+                <field name="asset_id"/>
+                <field name="product_id"/>
+                <field name="scheduled_date"/>
+                <field name="inspected_date"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_inspection_order" model="ir.actions.act_window">
+        <field name="name">Inspection Orders</field>
+        <field name="res_model">inspection.order</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+</odoo>

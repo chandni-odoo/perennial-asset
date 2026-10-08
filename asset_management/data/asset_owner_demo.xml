@@ -1,0 +1,15 @@
+<odoo>
+    <data noupdate="1">
+        <record id="asset_owner_pipl" model="asset.owner">
+            <field name="name">PIPL</field>
+        </record>
+
+        <record id="asset_owner_ptpl" model="asset.owner">
+            <field name="name">PTPL</field>
+        </record>
+
+        <record id="asset_owner_ace" model="asset.owner">
+            <field name="name">ACE</field>
+        </record>
+    </data>
+</odoo>

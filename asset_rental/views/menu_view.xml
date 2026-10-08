@@ -1,0 +1,49 @@
+<odoo>
+    <menuitem
+        id="menu_purchase_rental_root"
+        name="Rental"
+        parent="purchase.menu_purchase_root"
+        sequence="90"
+        groups="purchase.group_purchase_manager"/>
+        <!-- web_icon="asset_rental/static/description/icon.jpeg"/> -->
+   
+    <!-- Action: Only show products with rerent_ok = True -->
+    <record id="action_rental_products_available" model="ir.actions.act_window">
+        <field name="name">Rental Products</field>
+        <field name="res_model">product.template</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('rerent_ok','=',True)]</field>
+        <field name="context">{}</field>
+    </record>
+
+    <!-- Menu item: Under Products > Rental Products -->
+    <menuitem id="menu_rental_products_available"
+        name="Rental Products"
+        parent="menu_purchase_rental_root"
+        action="action_rental_products_available"
+        sequence="10"/>
+
+    <menuitem
+        id="menu_purchase_rental_order"
+        name="Rental Order"
+        parent="menu_purchase_rental_root"
+        action="action_purchase_rental_order"
+        sequence="11"
+    />
+
+    <!-- Configrution -->
+    <menuitem 
+        id="rental_purchase_menu"
+        name="Rental"
+        parent="purchase.menu_purchase_config"
+        sequence="10"
+    />
+    <menuitem 
+        id="rental_intervals_menu"
+        name="Rental Intervals"
+        parent="rental_purchase_menu"
+        action="action_rental_intervals"
+        sequence="5"
+    />
+   
+</odoo>

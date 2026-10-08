@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_asset_make_form" model="ir.ui.view">
+        <field name="name">asset.make.form</field>
+        <field name="model">asset.make</field>
+        <field name="arch" type="xml">
+            <form string="Make">
+                <sheet>
+                    <group colspan="2">
+                        <field name="name" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_asset_make_list" model="ir.ui.view">
+        <field name="name">asset.make.list</field>
+        <field name="model">asset.make</field>
+        <field name="arch" type="xml">
+            <list string="Make" editable="top" sample="1" multi_edit="1" >
+                <field name="name"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_asset_make" model="ir.actions.act_window">
+        <field name="name">Makes</field>
+        <field name="res_model">asset.make</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>
